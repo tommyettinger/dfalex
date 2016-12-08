@@ -1,8 +1,8 @@
 package com.nobigsoftware.dfalex;
 
-import java.util.EnumSet;
-
 import org.junit.Test;
+
+import java.util.EnumSet;
 
 public class JavaTest extends TestBase
 {

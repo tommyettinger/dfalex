@@ -106,7 +106,7 @@ public class StringSearcherTest extends TestBase
     public void replacementStringTest() throws Exception
     {
         SearchAndReplaceBuilder builder = new SearchAndReplaceBuilder();
-        builder.addReplacement(Pattern.regexI("[a-zA-z]*"), StringReplacements.string("x"));
+        builder.addReplacement(Pattern.regexI("[a-zA-z]+"), StringReplacements.string("x"));
         ObjToObj<String, String> replacer = builder.buildStringReplacer();
         
         String instr = " one two  three   four five ";
@@ -119,7 +119,7 @@ public class StringSearcherTest extends TestBase
     public void replacementSurroundTest() throws Exception
     {
         SearchAndReplaceBuilder builder = new SearchAndReplaceBuilder();
-        builder.addReplacement(Pattern.regexI("[a-zA-z]*"), StringReplacements.surround("(", StringReplacements.TOUPPER, ")"));
+        builder.addReplacement(Pattern.regexI("[a-zA-z]+"), StringReplacements.surround("(", StringReplacements.TOUPPER, ")"));
         ObjToObj<String, String> replacer = builder.buildStringReplacer();
         
         String instr = " one two  three   four five ";

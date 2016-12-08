@@ -123,7 +123,7 @@ public class DfaAuxiliaryInformation<MATCHRESULT>
         @SuppressWarnings("unchecked")
         final Iterator<DfaState<MATCHRESULT>>[] iterators = 
             (Iterator<DfaState<MATCHRESULT>>[]) new Iterator<?>[getStatesByNumber().size()];
-        final ArrayDeque<DfaState<MATCHRESULT>> stack = new ArrayDeque<>();
+        final LinkedList<DfaState<MATCHRESULT>> stack = new LinkedList<>();
         for (int rootIndex = 0; rootIndex < m_startStates.size(); ++rootIndex)
         {
             DfaState<MATCHRESULT> st = m_startStates.get(rootIndex);
@@ -200,7 +200,7 @@ public class DfaAuxiliaryInformation<MATCHRESULT>
         //Tarjan's algorithm
         final int[] pindex = new int[]{0};
         final int[] pcycle = new int[]{0};
-        final ArrayDeque<DfaState<MATCHRESULT>> stack = new ArrayDeque<>();
+        final LinkedList<DfaState<MATCHRESULT>> stack = new LinkedList<>();
         final int[] orderIndex = new int[getStatesByNumber().size()];
         final int[] backLink = new int[orderIndex.length];
         final int[] cycleNumbers = new int[orderIndex.length];

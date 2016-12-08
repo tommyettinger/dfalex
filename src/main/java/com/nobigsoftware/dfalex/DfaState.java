@@ -18,7 +18,7 @@ package com.nobigsoftware.dfalex;
 /**
  * A state in a char-matching deterministic finite automaton (that's the google phrase) or DFA
  * 
- * @param MATCHRESULT the type of result produced by matching patterns with this DFA
+ * @param <MATCHRESULT> the type of result produced by matching patterns with this DFA
  */
 public abstract class DfaState<MATCHRESULT>
 {

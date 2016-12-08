@@ -3,14 +3,14 @@ package com.nobigsoftware.dfalex;
 import org.junit.Assert;
 
 import java.io.PrintWriter;
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.HashMap;
 
 public class PrettyPrinter
 {
     private HashMap<DfaState<?>,String> m_names = new HashMap<>();
     private HashMap<DfaState<?>,String> m_transMemo = new HashMap<>();
-    private ArrayDeque<DfaState<?>> m_closureQ = new ArrayDeque<>();
+    private LinkedList<DfaState<?>> m_closureQ = new LinkedList<>();
     private int m_nextStateNum = 0;
     
     public void print(PrintWriter w, DfaState<?> state)

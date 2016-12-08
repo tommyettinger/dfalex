@@ -86,7 +86,8 @@ public class StringReplacements
         return new StringReplacement() { public int apply(SafeAppendable dest, CharSequence src, int startPos, int endPos) {    
             dest.append(str);
             return 0;
-            }};
+            }
+        };
     }
 
     /**
@@ -100,11 +101,13 @@ public class StringReplacements
      */
     public static final StringReplacement surround(final CharSequence prefix, final StringReplacement replacement, final CharSequence suffix)
     {
-        return new StringReplacement() { public int apply(SafeAppendable dest, CharSequence src, int startPos, int endPos) {    
-            dest.append(prefix);
-            int ret = replacement.apply(dest, src, startPos, endPos);
-            dest.append(suffix);
-            return ret;
-            }};
+        return new StringReplacement() {
+            public int apply(SafeAppendable dest, CharSequence src, int startPos, int endPos) {
+                dest.append(prefix);
+                int ret = replacement.apply(dest, src, startPos, endPos);
+                dest.append(suffix);
+                return ret;
+            }
+        };
     }
 }

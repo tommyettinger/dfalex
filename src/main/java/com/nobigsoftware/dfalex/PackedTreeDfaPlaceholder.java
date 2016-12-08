@@ -321,6 +321,10 @@ class PackedTreeDfaPlaceholder<MATCH> extends DfaStatePlaceholder<MATCH>
             for (; m_pos<m_array.length && m_array[m_pos]==null; ++m_pos);
             return ret;
         }
-	    
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException("remove() not supported");
+		}
 	}
 }

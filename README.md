@@ -5,7 +5,7 @@ Scanning / Lexical Analysis Without All The Fuss
 
 Sometimes you need faster and more robust matching than you can get out of Java regular expressions.  Maybe they're too
 slow for you, or you get stack overflows when you match things that are too long, or maybe you want to search for many
-patterns simultaneously.  There plenty of lexical analysis tools you can use, but they invovle a lot of fuss.  They make
+patterns simultaneously.  There plenty of lexical analysis tools you can use, but they involve a lot of fuss.  They make
 you write specifications in a domain-specific language, often mixed with code, and then generate new java code for a
 scanner that you have to incorporate into your build and use in pretty specific ways.
 
@@ -46,7 +46,7 @@ About
 DFALex is written by Matt Timmermans, and is all new code.  It's written in Java first, with too much attention paid to
 performance. Some tweaks have been added on by Tommy Ettinger, expanding compatibility and Maven-izing the project.
 
-DFAs are generated from NFAs with a starndard powerset construction, and minimized used a fast hash-based variant of
+DFAs are generated from NFAs with a standard powerset construction, and minimized used a fast hash-based variant of
 Hopcroft's algorithm.
 
 This project was started because lexical analysis is no big deal.  You should be able to just do it, without having to

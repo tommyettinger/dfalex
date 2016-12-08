@@ -416,12 +416,7 @@ public class DfaBuilder<MATCHRESULT extends Serializable>
 		
 		if (ambiguityResolver == null)
 		{
-			ambiguityResolver = new DfaAmbiguityResolver<MATCHRESULT>() {
-                @Override
-                public MATCHRESULT apply(Set<MATCHRESULT> data) {
-                    return DfaBuilder.defaultAmbiguityResolver(data);
-                }
-            };;
+			ambiguityResolver = genericDefaultAmbiguityResolver;
 		}
 		
 		for (Entry<MATCHRESULT, List<Matchable>> patEntry : m_patterns.entrySet())
@@ -479,12 +474,7 @@ public class DfaBuilder<MATCHRESULT extends Serializable>
         
         int startState = nfa.addState(null);
         final int endState = nfa.addState(true);
-        final DfaAmbiguityResolver<Boolean> ambiguityResolver = new DfaAmbiguityResolver<Boolean>() {
-            @Override
-            public Boolean apply(Set<Boolean> data) {
-                return DfaBuilder.defaultAmbiguityResolver(data);
-            }
-        };
+        final DfaAmbiguityResolver<Boolean> ambiguityResolver = theDefaultAmbiguityResolver;
 
         //First, make an NFA that matches the reverse of all the patterns
         for (Entry<MATCHRESULT, List<Matchable>> patEntry : m_patterns.entrySet())
@@ -525,7 +515,21 @@ public class DfaBuilder<MATCHRESULT extends Serializable>
         }
         return serializableDfa;
     }
-    
+
+    private DfaAmbiguityResolver<MATCHRESULT> genericDefaultAmbiguityResolver = new DfaAmbiguityResolver<MATCHRESULT>() {
+        @Override
+        public MATCHRESULT apply(Set<MATCHRESULT> data) {
+            return DfaBuilder.defaultAmbiguityResolver(data);
+        }
+    };
+
+    private static DfaAmbiguityResolver<Boolean> theDefaultAmbiguityResolver = new DfaAmbiguityResolver<Boolean>() {
+        @Override
+        public Boolean apply(Set<Boolean> data) {
+            return DfaBuilder.defaultAmbiguityResolver(data);
+        }
+    };
+
     private static <T> T defaultAmbiguityResolver(Set<T> matches)
 	{
         throw new DfaAmbiguityException(matches);
