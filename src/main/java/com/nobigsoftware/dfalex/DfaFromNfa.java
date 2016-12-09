@@ -211,16 +211,7 @@ class DfaFromNfa<RESULT>
 				m_tempStateSignature.add(argument);
 			}
 		}, nfaStateSet.getSize(), nfaStateSet.getRange());
-		nfaStateSet.dumpInOrder(new IntToVoid() {
-			@Override
-			public void accept(int stateNum)
-			{
-				if (m_nfa.hasTransitionsOrAccepts(stateNum))
-				{
-					m_dfaSigCodec.acceptInt(stateNum);
-				}
-			}
-		});
+		nfaStateSet.dumpInOrder(dumpMethod);
 		m_dfaSigCodec.finish();
 		
 		//make sure it's in the map
@@ -255,7 +246,7 @@ class DfaFromNfa<RESULT>
 		RESULT dfaAccept = null;
 		if (m_tempResultSet.size() > 1)
 		{
-			dfaAccept = (RESULT)m_ambiguityResolver.apply(m_tempResultSet);
+			dfaAccept = m_ambiguityResolver.apply(m_tempResultSet);
 		}
 		else if(!m_tempResultSet.isEmpty())
 		{
@@ -265,11 +256,27 @@ class DfaFromNfa<RESULT>
 		int acceptSetIndex = 0;
 		if (dfaAccept != null)
 		{
-			acceptSetIndex = m_acceptSetMap.containsKey(dfaAccept)
-					? m_acceptSetMap.get(dfaAccept)
-					: (m_acceptSets.add(dfaAccept) ? m_acceptSets.size()-1 :  m_acceptSets.size()-1);
+			if(m_acceptSetMap.containsKey(dfaAccept))
+			{
+				acceptSetIndex =m_acceptSetMap.get(dfaAccept);
+			}
+			else
+			{
+				m_acceptSets.add(dfaAccept);
+				m_acceptSetMap.put(dfaAccept, acceptSetIndex = m_acceptSets.size()-1);
+			}
 		}
 		
 		return new DfaStateInfo(transitions, acceptSetIndex);
 	}
+	private IntToVoid dumpMethod = new IntToVoid() {
+		@Override
+		public void accept(int stateNum)
+		{
+			if (m_nfa.hasTransitionsOrAccepts(stateNum))
+			{
+				m_dfaSigCodec.acceptInt(stateNum);
+			}
+		}
+	};
 }

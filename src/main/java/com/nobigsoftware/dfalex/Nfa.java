@@ -207,7 +207,7 @@ public class Nfa<MATCHRESULT>
         Set<NfaTransition> transSet = new HashSet<>();
         for (Integer src : reachable)
         {
-			List<NfaTransition> list = m_stateTransitions.get(state);
+			List<NfaTransition> list = m_stateTransitions.get(src);
 			if(list != null)
 			{
 				for(NfaTransition trans : list)
