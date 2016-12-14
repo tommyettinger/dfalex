@@ -160,11 +160,11 @@ public class DfaBuilder<MATCHRESULT extends Serializable>
         else
         {
             String cacheKey = _getCacheKey(DFATYPE_MATCHER, languages, ambiguityResolver);
-            serializableDfa = (SerializableDfa<MATCHRESULT>) m_cache.getCachedItem(cacheKey);
+            serializableDfa = m_cache.<MATCHRESULT>getCachedItem(cacheKey);
             if (serializableDfa == null)
             {
                 serializableDfa = _build(languages, ambiguityResolver);
-                m_cache.maybeCacheItem(cacheKey, serializableDfa);
+                m_cache.maybeCacheItem(serializableDfa);
             }
         }
         return serializableDfa.getStartStates();
@@ -241,11 +241,11 @@ public class DfaBuilder<MATCHRESULT extends Serializable>
         else
         {
             String cacheKey = _getCacheKey(DFATYPE_REVERSEFINDER, languages, null);
-            serializableDfa = (SerializableDfa<Boolean>) m_cache.getCachedItem(cacheKey);
+            serializableDfa = m_cache.getCachedItem(cacheKey);
             if (serializableDfa == null)
             {
                 serializableDfa = _buildReverseFinders(languages);
-                m_cache.maybeCacheItem(cacheKey, serializableDfa);
+                m_cache.maybeCacheItem(serializableDfa);
             }
         }
         return serializableDfa.getStartStates();
@@ -322,7 +322,7 @@ public class DfaBuilder<MATCHRESULT extends Serializable>
             serializableDfa = new SerializableDfa<>(minimalDfa);
             if (cacheKey != null && cache != null)
             {
-                cache.maybeCacheItem(cacheKey, serializableDfa);
+                cache.maybeCacheItem(serializableDfa);
             }
         }
         return serializableDfa.getStartStates();

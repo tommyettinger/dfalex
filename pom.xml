@@ -68,15 +68,15 @@
         <maven.gpg.version>1.6</maven.gpg.version>
         <jdk.version>1.7</jdk.version>
         <junit.version>4.11</junit.version>
-        <regexodus.version>0.1.7</regexodus.version>
+        <gdx.version>1.9.3</gdx.version>
     </properties>
 
 
     <dependencies>
         <dependency>
-            <groupId>com.github.tommyettinger</groupId>
-            <artifactId>regexodus</artifactId>
-            <version>${regexodus.version}</version>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx</artifactId>
+            <version>${gdx.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

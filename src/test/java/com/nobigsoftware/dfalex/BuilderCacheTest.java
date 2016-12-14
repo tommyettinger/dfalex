@@ -1,18 +1,12 @@
 package com.nobigsoftware.dfalex;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.nobigsoftware.util.BuilderCache;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.nobigsoftware.util.BuilderCache;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BuilderCacheTest extends TestBase
 {
@@ -50,23 +44,26 @@ public class BuilderCacheTest extends TestBase
     
     private static class InMemoryBuilderCache implements BuilderCache
     {
-        Map<String, byte[]> m_cache = new HashMap<>();
+        Map<CharSequence, CharSequence> m_cache = new HashMap<>();
         int m_hits = 0;
         
         @Override
-        public Serializable getCachedItem(String key)
+        public <R> SerializableDfa<R> getCachedItem(CharSequence key)
         {
-            Serializable ret=null;
-            byte[] bytes = m_cache.get(key);
-            if (bytes != null)
+            SerializableDfa<R> ret=null;
+            CharSequence data = m_cache.get(key);
+            if (data != null)
             {
+                ret = SerializableDfa.produce(data);
+                /*
                 try
                 {
                     ObjectInputStream is = new ObjectInputStream(new ByteArrayInputStream(bytes));
-                    ret = (Serializable)is.readObject();
+                    ret = (SerializableDfa<R>)is.readObject();
                 }
                 catch(Exception e)
                 {}
+                 */
             }
             if (ret != null)
             {
@@ -76,8 +73,11 @@ public class BuilderCacheTest extends TestBase
         }
 
         @Override
-        public void maybeCacheItem(String key, Serializable item)
+        public <R> void maybeCacheItem(SerializableDfa<R> item)
         {
+            CharSequence cs = item.condense();
+            m_cache.put(cs.subSequence(cs.length() - 32, cs.length()), cs);
+            /*
             try
             {
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -88,6 +88,7 @@ public class BuilderCacheTest extends TestBase
             }
             catch(Exception e)
             {}
+            */
         }
         
     }

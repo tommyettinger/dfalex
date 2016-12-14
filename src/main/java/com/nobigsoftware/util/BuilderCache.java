@@ -15,7 +15,7 @@
  */
 package com.nobigsoftware.util;
 
-import java.io.Serializable;
+import com.nobigsoftware.dfalex.SerializableDfa;
 
 /**
  * Implementations of this interface can cache serializable objects that
@@ -31,22 +31,17 @@ public interface BuilderCache
      *  of the source information that will go into building the item if this call fails
      *  to retrieve a cached version.  Typically this will be a cryptographic hash of
      *  the serialized form of that information.
-     * 
+     *
      * @return  the item that was previously cached under the key, or null if no such item
      *  can be retrieved.
      */
-    Serializable getCachedItem(String key);
+    <R> SerializableDfa<R> getCachedItem(CharSequence key);
     
     /**
      * This method may be called when an item is built, providing an opportunity to
      * cache it.
      * 
-     * @param key   The key that will be used to identify the item in future calls to {@link #getCachedItem(String)}.
-     *      Only letters, digits, and underscores are valid in keys, and key length is limited to 32 characters.
-     *      The behaviour of this method for invalid keys is undefined.
-     *      <P>
-     *      Keys that differ only by case may or may not be considered equal by this class.
      * @param item  The item to cache, if desired
      */
-    void maybeCacheItem(String key, Serializable item);
+    <R> void maybeCacheItem(SerializableDfa<R> item);
 }

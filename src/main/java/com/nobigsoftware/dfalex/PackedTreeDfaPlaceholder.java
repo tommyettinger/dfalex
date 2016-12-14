@@ -22,7 +22,7 @@ import java.util.List;
  * Serializable placeholder for DFA states implemented
  * as packed binary search trees.
  */
-class PackedTreeDfaPlaceholder<MATCH> extends DfaStatePlaceholder<MATCH>
+public class PackedTreeDfaPlaceholder<MATCH> extends DfaStatePlaceholder<MATCH>
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -39,8 +39,33 @@ class PackedTreeDfaPlaceholder<MATCH> extends DfaStatePlaceholder<MATCH>
 	//target number -1 means no transition
 	private int[] m_targetStateNumbers;
 	private MATCH m_match;
-	
-	PackedTreeDfaPlaceholder(RawDfa<MATCH> rawDfa, int stateNum)
+
+	PackedTreeDfaPlaceholder(char[] nodes, int[] targets, MATCH match)
+	{
+		m_internalNodes = nodes;
+		m_targetStateNumbers = targets;
+		m_match = match;
+	}
+
+	public String serializeToString()
+	{
+		StringBuilder sb = new StringBuilder(256);
+		Tools.append(sb, m_internalNodes.length).append(m_internalNodes);
+		Tools.append(sb, m_targetStateNumbers.length);
+		Tools.append(sb, m_targetStateNumbers);
+		sb.append(Tools.json.toJson(m_match));
+		return sb.toString();
+	}
+
+	public static <MATCH> PackedTreeDfaPlaceholder<MATCH> deserializeFromString(String data)
+	{
+		char[] nodes = new char[Tools.readInt(data, 0)];
+		data.getChars(3, nodes.length+3, nodes, 0);
+		int[] targets = Tools.readInts(data, nodes.length + 3);
+		return new PackedTreeDfaPlaceholder<MATCH>(nodes, targets, (MATCH) Tools.json.fromJson(null, data.substring(nodes.length + 6 + targets.length * 3)));
+	}
+
+	public PackedTreeDfaPlaceholder(RawDfa<MATCH> rawDfa, int stateNum)
 	{
 		DfaStateInfo info = rawDfa.getStates().get(stateNum);
         m_match = rawDfa.getAcceptSets().get(info.getAcceptSetIndex());
