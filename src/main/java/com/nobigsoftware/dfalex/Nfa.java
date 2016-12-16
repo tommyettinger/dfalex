@@ -245,4 +245,22 @@ public class Nfa<MATCHRESULT>
 				dest.add(e);
 		}
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Nfa<?> nfa = (Nfa<?>) o;
+
+		if (!m_stateTransitions.equals(nfa.m_stateTransitions)) return false;
+		return m_stateEpsilons.equals(nfa.m_stateEpsilons);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = m_stateTransitions.hashCode();
+		result = 31 * result + m_stateEpsilons.hashCode();
+		return result;
+	}
 }

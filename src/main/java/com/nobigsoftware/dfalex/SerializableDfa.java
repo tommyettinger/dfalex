@@ -62,34 +62,32 @@ public class SerializableDfa<RESULT> implements Serializable {
     public StringBuilder condense() {
         StringBuilder sb = new StringBuilder(m_dfaStates.size() * 12);
         sb.append(Tools.json.toJson(this, this.getClass()));
-        sharknado(sb);
+        //sharknado(sb);
         return sb;
     }
 
     @SuppressWarnings("unchecked")
     public static <RESULT> SerializableDfa<RESULT> produce(CharSequence text) {
-        int len = text.length();
-        CharSequence cs = text.subSequence(0, len - 32);
-        return (SerializableDfa<RESULT>) Tools.json.fromJson(SerializableDfa.class, cs.toString());
+        return (SerializableDfa<RESULT>) Tools.json.fromJson(SerializableDfa.class, text.toString());
     }
-
-    private static void sharknado(final StringBuilder data) {
+/*
+    private static void sharknado() {
+        final StringBuilder data = new StringBuilder(32);
         final long c1 = 0x357BD1113171B1F2L ^ 0xC6BC279692B5CC83L,
                 c2 = 0xCAFEBEEF1337FECAL ^ 0xC6BC279692B5CC83L,
                 c3 = 0xBABE42DEEDBEEFEEL ^ 0xC6BC279692B5CC83L;
-        final int len = data.length();
         long z1 = 0x632BE59BD9B4E019L + c1, r1 = 7L,
                 z2 = 0x632BE59BD9B4E019L + c2, r2 = 127L,
                 z3 = 0x632BE59BD9B4E019L + c3, r3 = 421L,
                 d;
-        for (int i = 0; i < len; i++) {
-            r1 ^= (z1 += ((d = data.charAt(i)) + 0x9E3779B97F4A7C15L) * 0xD0E89D2D311E289FL) * c1;
+        {
+            r1 ^= (z1 += ((d = the int in question) + 0x9E3779B97F4A7C15L) * 0xD0E89D2D311E289FL) * c1;
             r2 ^= (z2 += (d + 0x9E3779B97F4A7C15L) * 0xD0E89D2D311E289FL) * c2;
             r3 ^= (z3 += (d + 0x9E3779B97F4A7C15L) * 0xD0E89D2D311E289FL) * c3;
         }
-        r1 ^= Long.rotateLeft((z1 * 0xC6BC279692B5CC83L ^ r1 * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z1 >>> 58));
-        r2 ^= Long.rotateLeft((z2 * 0xC6BC279692B5CC83L ^ r2 * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z2 >>> 58));
-        r3 ^= Long.rotateLeft((z3 * 0xC6BC279692B5CC83L ^ r3 * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z3 >>> 58));
+        r1 ^= Long.rotateLeft((z1 * 0xC6BC279692B5CC83L ^ r1 * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z2 >>> 58));
+        r2 ^= Long.rotateLeft((z2 * 0xC6BC279692B5CC83L ^ r2 * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z3 >>> 58));
+        r3 ^= Long.rotateLeft((z3 * 0xC6BC279692B5CC83L ^ r3 * 0x9E3779B97F4A7C15L) + 0x632BE59BD9B4E019L, (int) (z1 >>> 58));
         data
                 .append(base32[(int) r1 & 31])
                 .append(base32[(int) (r1 >>>= 5) & 31]).append(base32[(int) (r1 >>>= 5) & 31])
@@ -114,4 +112,5 @@ public class SerializableDfa<RESULT> implements Serializable {
     }
 
     private static final char[] base32 = "0123456789abcdefghijklmnopqrstuv".toCharArray();
+    */
 }

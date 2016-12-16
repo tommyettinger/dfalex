@@ -43,5 +43,5 @@ public interface BuilderCache
      * 
      * @param item  The item to cache, if desired
      */
-    <R> void maybeCacheItem(SerializableDfa<R> item);
+    <R> void maybeCacheItem(CharSequence key, SerializableDfa<R> item);
 }

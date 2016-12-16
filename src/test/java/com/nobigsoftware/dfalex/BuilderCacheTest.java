@@ -44,14 +44,14 @@ public class BuilderCacheTest extends TestBase
     
     private static class InMemoryBuilderCache implements BuilderCache
     {
-        Map<CharSequence, CharSequence> m_cache = new HashMap<>();
+        Map<String, StringBuilder> m_cache = new HashMap<>();
         int m_hits = 0;
         
         @Override
         public <R> SerializableDfa<R> getCachedItem(CharSequence key)
         {
             SerializableDfa<R> ret=null;
-            CharSequence data = m_cache.get(key);
+            StringBuilder data = m_cache.get(key.toString());
             if (data != null)
             {
                 ret = SerializableDfa.produce(data);
@@ -73,10 +73,10 @@ public class BuilderCacheTest extends TestBase
         }
 
         @Override
-        public <R> void maybeCacheItem(SerializableDfa<R> item)
+        public <R> void maybeCacheItem(CharSequence key, SerializableDfa<R> item)
         {
-            CharSequence cs = item.condense();
-            m_cache.put(cs.subSequence(cs.length() - 32, cs.length()), cs);
+            StringBuilder cs = item.condense();
+            m_cache.put(key.toString(), cs);
             /*
             try
             {

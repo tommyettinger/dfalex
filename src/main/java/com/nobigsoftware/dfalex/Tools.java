@@ -1,14 +1,14 @@
 package com.nobigsoftware.dfalex;
 
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 
 /**
  * Created by Tommy Ettinger on 12/13/2016.
  */
 public class Tools {
-    public static final Json json = new Json(JsonWriter.OutputType.minimal);
+    public static final Json json = new Json(JsonWriter.OutputType.javascript);
+    /*
     static {
         json.setSerializer(PackedTreeDfaPlaceholder.class, new Json.Serializer<PackedTreeDfaPlaceholder>() {
             @Override
@@ -30,6 +30,7 @@ public class Tools {
             }
         });
     }
+    */
     public static StringBuilder append(StringBuilder sb, int[] data)
     {
         if(data == null)

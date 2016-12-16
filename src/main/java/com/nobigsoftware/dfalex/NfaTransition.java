@@ -68,10 +68,10 @@ public final class NfaTransition implements Serializable
     @Override
     public int hashCode()
     {
-        int hash = (int)2166136261L;
+        int hash = 0x811C9DC5;
         hash = (hash ^ (int)m_firstChar)*16777619;
         hash = (hash ^ (int)m_lastChar)*16777619;
-        hash = (hash ^ (int)m_stateNum)*16777619;
+        hash = (hash ^ m_stateNum)*16777619;
         return hash ^ (hash>>16);
     }
 }

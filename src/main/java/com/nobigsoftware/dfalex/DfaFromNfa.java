@@ -205,12 +205,7 @@ class DfaFromNfa<RESULT>
 	{
 		//dump state combination into compressed form
 		m_tempStateSignature.clear();
-		m_dfaSigCodec.start(new IntToVoid() {
-			@Override
-			public void accept(int argument) {
-				m_tempStateSignature.add(argument);
-			}
-		}, nfaStateSet.getSize(), nfaStateSet.getRange());
+		m_dfaSigCodec.start(m_tempStateSignature, nfaStateSet.getSize(), nfaStateSet.getRange());
 		nfaStateSet.dumpInOrder(dumpMethod);
 		m_dfaSigCodec.finish();
 		

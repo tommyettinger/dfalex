@@ -21,7 +21,7 @@ package com.nobigsoftware.dfalex;
  */
 class DfaStateSignatureCodec
 {
-	private IntToVoid m_currentTarget;
+	private IntListKey m_currentTarget;
 	private int m_fieldLength = 32;
 	private int m_fieldMask;
 	private int m_pendingBits;
@@ -35,7 +35,7 @@ class DfaStateSignatureCodec
 	 * @param size number of NFA states in this signature
 	 * @param range total number of NFA states in the NFA
 	 */
-	public void start(IntToVoid target, int size, int range)
+	public void start(IntListKey target, int size, int range)
 	{
 		m_currentTarget = target;
 		m_fieldLength = getCompactEncodingLengthForSize(size, range);
@@ -80,7 +80,7 @@ class DfaStateSignatureCodec
 	{
 		if (m_pendingSize >= 32)
 		{
-			m_currentTarget.accept(m_pendingBits);
+			m_currentTarget.add(m_pendingBits);
 			m_pendingBits = val;
 			m_pendingSize = m_fieldLength;
 			return;
@@ -89,7 +89,7 @@ class DfaStateSignatureCodec
 		m_pendingBits |= val << m_pendingSize;
 		if ((m_pendingSize+=m_fieldLength) > 32)
 		{
-			m_currentTarget.accept(m_pendingBits);
+			m_currentTarget.add(m_pendingBits);
 			m_pendingSize-=32;
 			m_pendingBits = val >>> (m_fieldLength - m_pendingSize);
 		}
@@ -101,7 +101,7 @@ class DfaStateSignatureCodec
 		{
 			m_pendingBits |= (~0)<<m_pendingSize;
 		}
-		m_currentTarget.accept(m_pendingBits);
+		m_currentTarget.add(m_pendingBits);
 		m_currentTarget = null;
 	}
 	

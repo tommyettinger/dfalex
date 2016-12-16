@@ -40,6 +40,10 @@ public class PackedTreeDfaPlaceholder<MATCH> extends DfaStatePlaceholder<MATCH>
 	private int[] m_targetStateNumbers;
 	private MATCH m_match;
 
+	public PackedTreeDfaPlaceholder()
+	{
+
+	}
 	PackedTreeDfaPlaceholder(char[] nodes, int[] targets, MATCH match)
 	{
 		m_internalNodes = nodes;

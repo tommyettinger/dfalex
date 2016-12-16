@@ -29,7 +29,11 @@ class CompactIntSubset
 	private int m_size; //number of integers in the set == number non-zero bits in m_bitmask
 	private int m_marksize; //number of marks in m_usemarks
 	private boolean m_sorted = true; //true if m_usemarks is sorted and deduped
-	
+
+	public CompactIntSubset()
+	{
+		this(0);
+	}
 	public CompactIntSubset(int range)
 	{
 		m_range = range;
@@ -194,6 +198,8 @@ class CompactIntSubset
 		m_marksize = newsize;
 		Arrays.sort(m_usemarks, 0, m_marksize);
 		m_sorted = true;
-		assert(m_marksize == m_size);
+		if(m_marksize != m_size)
+			System.out.println("WAAH");
+		//assert(m_marksize == m_size);
 	}
 }
