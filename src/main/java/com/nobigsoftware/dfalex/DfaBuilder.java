@@ -507,7 +507,12 @@ public class DfaBuilder<MATCHRESULT extends Serializable> {
         }
 
         if (ambiguityResolver == null) {
-            ambiguityResolver = genericDefaultAmbiguityResolver;
+            ambiguityResolver = new DfaAmbiguityResolver<MATCHRESULT>() {
+                @Override
+                public MATCHRESULT apply(Set<MATCHRESULT> data) {
+                    return DfaBuilder.defaultAmbiguityResolver(data);
+                }
+            };
         }
 
         for (Entry<MATCHRESULT, List<Matchable>> patEntry : m_patterns.entrySet()) {
@@ -592,12 +597,14 @@ public class DfaBuilder<MATCHRESULT extends Serializable> {
         return serializableDfa;
     }
 
+    /*
     private DfaAmbiguityResolver<MATCHRESULT> genericDefaultAmbiguityResolver = new DfaAmbiguityResolver<MATCHRESULT>() {
         @Override
         public MATCHRESULT apply(Set<MATCHRESULT> data) {
             return DfaBuilder.defaultAmbiguityResolver(data);
         }
     };
+    */
 
     private static DfaAmbiguityResolver<Boolean> theDefaultAmbiguityResolver = new DfaAmbiguityResolver<Boolean>() {
         @Override

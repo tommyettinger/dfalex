@@ -198,8 +198,6 @@ class CompactIntSubset
 		m_marksize = newsize;
 		Arrays.sort(m_usemarks, 0, m_marksize);
 		m_sorted = true;
-		if(m_marksize != m_size)
-			System.out.println("WAAH");
-		//assert(m_marksize == m_size);
+		//assert(m_marksize == m_size); // this actually fails in the original source
 	}
 }
